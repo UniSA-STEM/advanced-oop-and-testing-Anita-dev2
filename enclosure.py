@@ -61,18 +61,54 @@ class Enclosure:
         else:
             print(f"{staff_member.staff_name} is not clocked in for work - please clock in first!")
 
+    def get_clean(self):
+        return self.__clean
+
+    clean = property(get_clean)
+
+    def clean_enclosure(self, staff_member):
+        if staff_member.working:
+            if isinstance(staff_member, Zookeeper):
+                if not self.clean:
+                    self.__clean = True
+                    print(f"{staff_member.staff_name} has successfully cleaned the enclosure.")
+                else:
+                    print(f"{staff_member.staff_name} has already cleaned the enclosure today.")
+            else:
+                print(f"Only Zookeepers can clean the enclosures.")
+        else:
+            print(f"{staff_member.staff_name} is not clocked in for work - please clock in first!")
+
+
+    def __str__(self):
+        animal_list = ", ".join(str(animal.get_name()) for animal in self.__animals)
+
+        if self.__fed:
+            animals_fed = "Yes"
+        else:
+            animals_fed = "No"
+
+        if self.__clean:
+            enclosure_clean = "Yes"
+        else:
+            enclosure_clean = "No"
+
+        return f"Animals in this enclosure: {animal_list}\nAnimals Fed: {animals_fed}\nEnclosure Clean: {enclosure_clean}"
+
 
 
 class Aquatic(Enclosure):
     def __init__(self):
         super().__init__()
 
-
     def add_animal(self, animal):
         if not isinstance(animal, Fish):
             print(f"{animal.species} cannot live in this enclosure. Only Fish can live in the Aquarium.")
 
         super().add_animal(animal)
+
+    def __str__(self):
+        return super().__str__()
 
 class Savannah(Enclosure):
     def __init__(self):
