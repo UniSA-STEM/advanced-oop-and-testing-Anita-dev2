@@ -46,17 +46,27 @@ class Animal(ABC):
         This is a getter for name
         :return: name: str
         """
-        return self.__name
+        return self.__name.capitalize()
 
     # Set property for animal name
     animal_name = property(get_name)
+
+    def get_age(self):
+        """
+        This is a getter for age
+        :return: age: int
+        """
+        return self.__age
+
+    # Set property for animal age
+    age = property(get_age)
 
     def get_dietary_needs(self):
         """
         This is a getter for dietary needs
         :return: dietary_needs: str
         """
-        return self.__dietary_needs
+        return self.__dietary_needs.capitalize()
 
     # Set property for dietary needs
     diet = property(get_dietary_needs)
@@ -77,13 +87,6 @@ class Animal(ABC):
         :return: health
         """
         return self.__health
-
-    def set_health(self):
-        """
-        This is a setter for health - it sets health back to default value of "Healthy"
-        :return:
-        """
-        self.__health = "Healthy"
 
     # Set property for health
     health = property(get_health)
@@ -122,11 +125,11 @@ class Animal(ABC):
         # Initialise food variable
         food = ""
         # Run checks to see which dietary need the animal has, and print the relevant statement
-        if self.diet == "herbivore":
+        if self.diet == "Herbivore":
             food = "tasty greens"
-        elif self.diet == "omnivore":
+        elif self.diet == "Omnivore":
             food = "a scrumptious mix of greens and meat"
-        elif self.diet == "carnivore":
+        elif self.diet == "Carnivore":
             food = "a hearty portion of meat"
         # Display result of the function to user
         print(f"{self.animal_name} is currently eating {food}")
@@ -138,6 +141,14 @@ class Animal(ABC):
         """
         # Display result of the function to the user
         print(f"{self.animal_name} is sleeping...")
+
+
+    def __str__(self):
+        """
+        This is the string method for Animal
+        :return:
+        """
+        return f"Meet {self.animal_name}! {self.animal_name} is a {self.species}, and is {self.age} years old. {self.animal_name} is a {self.diet}.\nTo learn more about {self.animal_name}, ask one of our friendly Zookeepers!"
 
 
 class Mammal(Animal):
@@ -204,7 +215,8 @@ try:
 except(TypeError, ValueError) as e:
     print("Failed to create animal: ", e)
 
-"""
+
 animal.cry()
 animal.eat()
-animal.sleep()"""
+animal.sleep()
+print(animal)
