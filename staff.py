@@ -6,13 +6,17 @@ ID: 110100110
 Username: bizvy001
 This is my own work as defined by the University's Academic Integrity Policy.
 """
+from abc import ABC, abstractmethod
 
+class Staff(ABC):
+    __next_id = 1
 
-class Staff:
-    def __init__(self, name, id):
+    def __init__(self, name):
         self.__name = name
-        self.__id = id
+        self.__id = Staff.__next_id
         self.__clocked_in = False
+        Staff.__next_id = Staff.__next_id + 1
+
 
     def get_staff_name(self):
         return self.__name
@@ -22,11 +26,7 @@ class Staff:
     def get_staff_id(self):
         return self.__id
 
-    def set_staff_id(self, id):
-        if isinstance(id, int):
-            self.__id = id
-
-    staff_id = property(get_staff_id, set_staff_id)
+    staff_id = property(get_staff_id)
 
     def get_attendance(self):
         return self.__clocked_in
@@ -47,39 +47,37 @@ class Staff:
         else:
             print(f"{self.staff_name} has already finished for today.")
 
-
-
+    @abstractmethod
     def __str__(self):
-        return f"Name: {self.staff_name}\nStaff ID: {self.staff_id}"
+        pass
 
 
 class Zookeeper(Staff):
-    def __init__(self, name, id):
-        super().__init__(name, id)
-
+    def __init__(self, name):
+        super().__init__(name)
 
     def __str__(self):
-        return super().__str__() + "\nRole: Zookeeper"
+        return f"Name: {self.staff_name}\nStaff ID: {self.staff_id}\nRole: Zookeeper\nAllocated Tasks: Feeding + Cleaning\n"
 
 
 class Veterinarian(Staff):
-    def __init__(self, name, id):
-        super().__init__(name, id)
+    def __init__(self, name):
+        super().__init__(name)
 
     def __str__(self):
-        return super().__str__() + "\nRole: Veterinarian"
+        return f"Name: {self.staff_name}\nStaff ID: {self.staff_id}\nRole: Veterinarian\nAllocated Tasks: Health Checks\n"
 
 
 
-staff1 = Staff("Bob", 7)
+staff1 = Zookeeper("Bob")
 staff1.clock_in()
 staff1.get_staff_id()
 print(staff1)
-zoo1 = Zookeeper("Sally", 2)
+zoo1 = Zookeeper("Sally")
 print(zoo1)
 zoo1.clock_in()
 zoo1.clock_in()
 zoo1.clock_out()
-vet1 = Veterinarian("Rob", 3)
+vet1 = Veterinarian("Rob")
 vet1.clock_in()
 print(vet1)
