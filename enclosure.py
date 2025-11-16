@@ -15,17 +15,31 @@ from animal import Mammal
 from staff import Zookeeper
 from staff import Veterinarian
 
-class Enclosure:
+class Enclosure(ABC):
+    SIZE_OPTIONS = ["small", "medium", "large"]
+    SIZE_CAPACITY = {
+        "small": 6,
+        "medium": 12,
+        "large": 18
+    }
+
+
     def __init__(self):
         self.__fed = False
         self.__clean = False
         self.__health_check = False
         self.__animals = []
         self.__animal_type = None
+        self.__size = "small"
 
     @abstractmethod
     def can_accept(self, animal):
         pass
+
+    def get_capacity(self):
+        return self.SIZE_CAPACITY[self.__size]
+
+    capacity = property(get_capacity)
 
     def add_animal(self, animal):
         if not isinstance(animal, Animal):
@@ -37,13 +51,24 @@ class Enclosure:
             self.__animals.append(animal)
             print(f"{animal.animal_name} the {animal.species} is now in the enclosure. ")
         else:
-            if animal.species == self.__animal_type:
-                self.__animals.append(animal)
-                print(f"{animal.animal_name} the {animal.species} has been introduced into the enclosure.")
+            if len(self.__animals) < self.capacity:
+                if animal.species == self.__animal_type:
+                    self.__animals.append(animal)
+                    print(f"{animal.animal_name} the {animal.species} has been introduced into the enclosure.")
+                else:
+                    print(f"{animal.species}(s) don't get along with {self.__animal_type}(s) - best to keep them apart.")
             else:
-                print(f"{animal.species}(s) don't get along with {self.__animal_type}(s) - best to keep them apart.")
+                print("The enclosure is at capacity - please expand the enclosure before adding additional animals.")
 
 
+    def expand_enclosure(self):
+        index = self.SIZE_OPTIONS.index(self.__size)
+
+        if index == len(self.SIZE_OPTIONS) - 1:
+            print("The enclosure is already at maximum size.")
+        else:
+            self.__size = self.SIZE_OPTIONS[index + 1]
+            print(f"The enclosure now has a capacity of {self.capacity}")
 
     def get_fed(self):
         return self.__fed
@@ -208,7 +233,7 @@ class Farmyard(Enclosure):
         else:
             print(f"{animal.species}(s) do not belong in this enclosure")
 
-class Australiana(Enclosure):
+class Bushland(Enclosure):
     def __init__(self):
         self.__accepted_species = {"koala", "kangaroo", "echidna", "wallaby", "wombat", "emu", "possum", "tasmanian devil", "dingo", "quokka"}
         super().__init__()
@@ -232,7 +257,16 @@ aqua1.add_animal(fish)"""
 """fish2 = Fish("nemo", "fish", 5, "herbivore")
 aqua1.add_animal(fish2)
 print(aqua1)"""
-
+"""
 lion = Mammal("hello", "lion", 5, "carnivore")
 aqua1 = Aquatic()
-aqua1.add_animal(lion)
+aqua1.add_animal(lion)"""
+
+enclosure = Savannah()
+for i in range(6):
+    enclosure.add_animal(Mammal("lion", "lion", 4, "carnivore"))
+
+enclosure.add_animal(Mammal("boo", "lion", 5, "carnivore"))
+enclosure.expand_enclosure()
+enclosure.expand_enclosure()
+enclosure.expand_enclosure()
