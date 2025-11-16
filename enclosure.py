@@ -7,6 +7,7 @@ Username: maray160
 This is my own work as defined by the University's Academic Integrity Policy.
 """
 from abc import ABC, abstractmethod
+from datetime import date
 from animal import Animal
 from animal import Fish
 from animal import Bird
@@ -130,8 +131,15 @@ class Enclosure(ABC):
         else:
             print("Only Veterinarians can treat animals.")
 
+    def health_report(self):
+        current_date = date.today()
+        print(f"Health Report: {current_date}")
+        for animal in self.__animals:
+            print(f"Name: {animal.animal_name.capitalize()} >> Species: {animal.species.capitalize()} >> Health Status: {animal.health_status()}")
+
+
     def get_animal_type(self):
-        return self.__animal_type
+        return self.__animal_type.capitalize()
 
     animal_type = property(get_animal_type)
 
@@ -251,18 +259,20 @@ class Bushland(Enclosure):
 
 
 
-"""fish = Fish("dory", "seal", 4, "herbivore")
+fish = Fish("dory", "seal", 4, "herbivore")
 aqua1 = Aquatic()
-aqua1.add_animal(fish)"""
-"""fish2 = Fish("nemo", "fish", 5, "herbivore")
+aqua1.add_animal(fish)
+fish2 = Fish("nemo", "seal", 5, "herbivore")
 aqua1.add_animal(fish2)
-print(aqua1)"""
+print(aqua1)
+
+aqua1.health_report()
 """
 lion = Mammal("hello", "lion", 5, "carnivore")
 aqua1 = Aquatic()
 aqua1.add_animal(lion)"""
 
-enclosure = Savannah()
+"""enclosure = Savannah()
 for i in range(6):
     enclosure.add_animal(Mammal("lion", "lion", 4, "carnivore"))
 
@@ -270,3 +280,7 @@ enclosure.add_animal(Mammal("boo", "lion", 5, "carnivore"))
 enclosure.expand_enclosure()
 enclosure.expand_enclosure()
 enclosure.expand_enclosure()
+
+for i in range(12):
+    enclosure.add_animal(Mammal("lion", "lion", 4, "carnivore"))
+enclosure.add_animal(Mammal("boo", "lion", 5, "carnivore"))"""
