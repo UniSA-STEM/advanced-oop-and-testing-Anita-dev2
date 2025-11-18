@@ -88,8 +88,15 @@ class Animal(ABC):
         """
         return self.__health
 
+    def set_health(self):
+        """
+        This is a setter for health to reset an animal's health back to healthy
+        :return: health
+        """
+        return self.__health == "Healthy"
+
     # Set property for health
-    health = property(get_health)
+    health = property(get_health, set_health)
 
     def health_status(self):
         """
@@ -126,13 +133,13 @@ class Animal(ABC):
         food = ""
         # Run checks to see which dietary need the animal has, and print the relevant statement
         if self.diet == "Herbivore":
-            food = "tasty greens"
+            food = "tasty greens."
         elif self.diet == "Omnivore":
-            food = "a scrumptious mix of greens and meat"
+            food = "a scrumptious mix of greens and meat."
         elif self.diet == "Carnivore":
-            food = "a hearty portion of meat"
+            food = "a hearty portion of meat."
         # Display result of the function to user
-        print(f"{self.animal_name} is currently eating {food}")
+        print(f"{self.animal_name} is currently eating {food}.")
 
     def sleep(self):
         """
@@ -208,9 +215,9 @@ class Fish(Animal):
         This function takes the animal name and prints the specific animal cry to the user
         :return:
         """
-        print(f"{self.animal_name} is crying! *Bubble Bubble")
+        print(f"{self.animal_name} is crying! *Bubble Bubble*")
 
-try:
+"""try:
     animal = Mammal("Caramello", "Koala", 5, "herbivore")
 except(TypeError, ValueError) as e:
     print("Failed to create animal: ", e)
@@ -219,4 +226,4 @@ except(TypeError, ValueError) as e:
 animal.cry()
 animal.eat()
 animal.sleep()
-print(animal)
+print(animal)"""
