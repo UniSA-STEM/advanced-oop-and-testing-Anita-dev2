@@ -93,37 +93,106 @@ def staff_methods():
     staff1.clock_out()
 
 
+def staff_tending():
+    """
+    This function shows the functionality of the staff. It demonstrates staff feeding, doing health checks and cleaning enclosures.
+    :return:
+    """
+    # Instantiate an enclosure
+    enclosure = Savannah()
+
+    # Instantiate both staff types
+    keeper = Zookeeper("Bill")
+    vet = Veterinarian("Ben")
+
+    # Create two lion "Mammal" objects and add to enclosure
+    lion = Mammal("Simba", "lion", 6, "carnivore")
+    lion2 = Mammal("Scar", "lion", 10, "carnivore")
+    enclosure.add_animal(lion)
+    enclosure.add_animal(lion2)
+
+    # Feed the enclosure without staff clocking in
+    enclosure.feed_enclosure(keeper)
+
+    # Staff clock in
+    keeper.clock_in()
+    vet.clock_in()
+
+    # Attempt to feed enclosure after clock in
+    enclosure.feed_enclosure(keeper)
+
+    # Attempt for the vet to feed enclosure
+    enclosure.feed_enclosure(vet)
+
+    # Keeper to clean enclosure
+    enclosure.clean_enclosure(keeper)
+
+    # Display health report
+    enclosure.health_report()
+
+    # Vet checks health of animals in enclosure
+    enclosure.check_health(vet)
+
+    # Display health report again after health checks
+    enclosure.health_report()
+
+    # Attempt to clean enclosure by vet and again by keeper
+    enclosure.clean_enclosure(vet)
+    enclosure.clean_enclosure(keeper)
+
+    # Show status report of enclosure
+    print(enclosure)
+
+
+def expanding_enclosure():
+    """
+    This function showcases the sizes of enclosure and the functionality of expanding the enclosure.
+    :return:
+    """
+    # Instantiate a farmyard enclosure
+    farmyard = Farmyard()
+
+    # Create 6 Mammal objects and add all to the enclosure
+    dog1 = Mammal("Scooby", "dog", 9, "omnivore")
+    dog2 = Mammal("Bluey", "dog", 3, "omnivore")
+    dog3 = Mammal("Clifford", "dog", 4, "omnivore")
+    dog4 = Mammal("Slinky", "dog", 2, "omnivore")
+    dog5 = Mammal("Snoopy", "dog", 7, "omnivore")
+    dog6 = Mammal("Lassie", "dog", 2, "omnivore")
+    farmyard.add_animal(dog1)
+    farmyard.add_animal(dog2)
+    farmyard.add_animal(dog3)
+    farmyard.add_animal(dog4)
+    farmyard.add_animal(dog5)
+    farmyard.add_animal(dog6)
+
+    # Display enclosure stats/report
+    print(farmyard)
+
+    # Attempt to add another valid animal
+    dog7 = Mammal("Bingo", "dog", 5, "omnivore")
+    farmyard.add_animal(dog7)
+
+    # Expand the enclosure, and re-add the valid animal
+    farmyard.expand_enclosure()
+    farmyard.add_animal(dog7)
+
+    # Display enclosure stats/report
+    print(farmyard)
+
+    # Expand and display again
+    farmyard.expand_enclosure()
+    print(farmyard)
+
+    # Try to expand after max expansions
+    farmyard.expand_enclosure()
+
+
+
+
+
 animal_methods()
 adding_different_animals()
 staff_methods()
-
-
-
-"""staff1 = Zookeeper("Sally", 2,)
-aquarium.feed_enclosure(staff1)
-staff1.clock_in()
-aquarium.feed_enclosure(staff1)
-aquarium.feed_enclosure(staff1)
-print(aquarium)
-aquarium.clean_enclosure(staff1)
-print(aquarium)"""
-
-"""aviary = Aviary()
-bird = Bird("Billy", "Bird", 6, "Carnivore")
-aviary.add_animal(bird)
-bird1 = Bird("Bab", "Bird", 4, "Omnivore")
-aviary.add_animal(bird1)
-print(aviary)
-
-staff1 = Zookeeper("Sally")
-staff2 = Veterinarian("Chris")
-staff2.clock_in()
-aviary.check_health(staff2)
-aviary.check_health(staff2)
-print(aviary)
-
-aviary.feed_enclosure(staff1)
-print(aviary)
-staff1.clock_in()
-aviary.feed_enclosure(staff1)
-"""
+staff_tending()
+expanding_enclosure()
