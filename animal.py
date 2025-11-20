@@ -20,19 +20,26 @@ class Animal(ABC):
         # Validate name input
         if not isinstance(name, str):
             raise TypeError("Name must be a string.")
+        self.__name = name
 
         # Validate species input
         if not isinstance(species, str):
             raise TypeError("Species must be a string.")
+        self.__species = species
 
         # Validate age input
         if not isinstance(age, int):
             raise TypeError("Age must be an integer.")
+        if age < 0:
+            raise ValueError("Age cannot be less than 0")
+        self.__age = age
 
         # Validate dietary_needs input
         valid_diet = {"carnivore", "omnivore", "herbivore"}
         if dietary_needs.lower() not in valid_diet:
             raise ValueError(f"Valid diets include: {', '.join(valid_diet)}")
+
+        self.__dietary_needs = dietary_needs
 
         # If the input passes all validation, it is assigned into the attributes
         self.__name = name
@@ -93,7 +100,7 @@ class Animal(ABC):
         This is a setter for health to reset an animal's health back to healthy
         :return: health
         """
-        return self.__health == "Healthy"
+        self.__health = "Healthy"
 
     # Set property for health
     health = property(get_health, set_health)
@@ -139,7 +146,7 @@ class Animal(ABC):
         elif self.diet == "Carnivore":
             food = "a hearty portion of meat."
         # Display result of the function to user
-        print(f"{self.animal_name} is currently eating {food}.")
+        print(f"{self.animal_name} is currently eating {food}.\n")
 
     def sleep(self):
         """
@@ -147,7 +154,7 @@ class Animal(ABC):
         :return:
         """
         # Display result of the function to the user
-        print(f"{self.animal_name} is sleeping...")
+        print(f"{self.animal_name} is sleeping...\n")
 
 
     def __str__(self):
@@ -155,7 +162,7 @@ class Animal(ABC):
         This is the string method for Animal
         :return:
         """
-        return f"Meet {self.animal_name}! {self.animal_name} is a {self.species}, and is {self.age} years old. {self.animal_name} is a {self.diet}.\nTo learn more about {self.animal_name}, ask one of our friendly Zookeepers!"
+        return f"Meet {self.animal_name}! {self.animal_name} is a {self.species}, and is {self.age} years old. {self.animal_name} is a {self.diet}.\nTo learn more about {self.animal_name}, ask one of our friendly Zookeepers!\n"
 
 
 class Mammal(Animal):
@@ -171,7 +178,7 @@ class Mammal(Animal):
         This function takes the animal name and prints the specific animal cry to the user
         :return:
         """
-        print(f"{self.animal_name} is crying! *Bleat Bleat*")
+        print(f"{self.animal_name} is crying! *Bleat Bleat*\n")
 
 
 class Reptile(Animal):
@@ -186,7 +193,7 @@ class Reptile(Animal):
         This function takes the animal name and prints the specific animal cry to the user
         :return:
         """
-        print(f"{self.animal_name} is crying! *Hiss Hiss*")
+        print(f"{self.animal_name} is crying! *Hiss Hiss*\n")
 
 
 class Bird(Animal):
@@ -201,7 +208,7 @@ class Bird(Animal):
         This function takes the animal name and prints the specific animal cry to the user
         :return:
         """
-        print(f"{self.animal_name} is crying! *Chirp Chirp*")
+        print(f"{self.animal_name} is crying! *Chirp Chirp*\n")
 
 class Fish(Animal):
     """
@@ -217,13 +224,3 @@ class Fish(Animal):
         """
         print(f"{self.animal_name} is crying! *Bubble Bubble*")
 
-"""try:
-    animal = Mammal("Caramello", "Koala", 5, "herbivore")
-except(TypeError, ValueError) as e:
-    print("Failed to create animal: ", e)
-
-
-animal.cry()
-animal.eat()
-animal.sleep()
-print(animal)"""
