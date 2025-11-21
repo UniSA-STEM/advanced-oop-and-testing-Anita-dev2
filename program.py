@@ -94,6 +94,12 @@ class TestZoo:
         with pytest.raises(TypeError):
             Reptile("Rango", "lizard", "5", "carnivore")
 
+        with pytest.raises(ValueError):
+            Reptile("Rango", "lizard", -3, "carnivore")
+
+        with pytest.raises(TypeError):
+            Reptile("Rango", "lizard", "five", "carnivore")
+
     def test_invalid_species(self, fish):
         with pytest.raises(TypeError):
             Fish("Nemo", 3, 4, "omnivore")
@@ -130,12 +136,15 @@ class TestZoo:
         assert fish.get_health() == "Healthy"
         assert reptile.get_health() == "Healthy"
 
+    def test_set_health(self, mammal):
+        mammal.set_health()
+        assert mammal.get_health() == "Healthy"
+
     def test_health_status(self, mammal, bird, fish, reptile):
         assert mammal.health_status() == "Healthy" or "Injured" or "Sick" or "Behaviourally Challenged"
         assert bird.health_status() == "Healthy" or "Injured" or "Sick" or "Behaviourally Challenged"
         assert fish.health_status() == "Healthy" or "Injured" or "Sick" or "Behaviourally Challenged"
         assert reptile.health_status() == "Healthy" or "Injured" or "Sick" or "Behaviourally Challenged"
-
 
     def test_str(self, mammal, bird, fish, reptile):
         assert mammal.__str__() == "Meet Caramello! Caramello is a koala, and is 5 years old. Caramello is a Herbivore.\nTo learn more about Caramello, ask one of our friendly Zookeepers!\n"
@@ -153,6 +162,7 @@ class TestZoo:
         assert farmyard.capacity == 6
         assert savannah.capacity == 6
         assert aquatic.capacity == 6
+        assert aquatic.capacity != "small"
 
     def test_can_accept(self, bushland, aviary, vivarium, farmyard, savannah, aquatic, mammal):
         assert bushland.can_accept(mammal) == True
@@ -178,11 +188,34 @@ class TestZoo:
         assert savannah.clean == False
         assert aquatic.clean == False
 
-    def test_get_health_check(self, bushland, aviary, vivarium, farmyard, savannah, aquatic):
+    def test_get_health_check(self, bushland, aviary, vivarium, farmyard, savannah, aquatic, vet):
         assert bushland.health_check == False
         assert aviary.health_check == False
         assert vivarium.health_check == False
         assert farmyard.health_check == False
         assert savannah.health_check == False
         assert aquatic.health_check == False
+        vet.clock_in()
+        aquatic.check_health(vet)
+        assert aquatic.health_check == True
+
+    def test_get_staff_name(self, zookeeper, vet):
+        assert zookeeper.staff_name == "Bill"
+        assert vet.staff_name == "Ben"
+
+    def test_get_staff_id(self, zookeeper, vet):
+        assert zookeeper.staff_id == 4
+        assert zookeeper.staff_id != "4"
+        assert vet.staff_id == 5
+        assert vet.staff_id != "five"
+
+    def test_id_increment(self, zookeeper, vet):
+        assert vet.staff_id == zookeeper.staff_id + 1
+
+    def test_get_attendance(self, zookeeper, vet):
+        assert zookeeper.working == False
+        assert vet.working == False
+        zookeeper.clock_in()
+        assert zookeeper.working == True
+
 
