@@ -51,7 +51,7 @@ class Animal(ABC):
     def get_name(self):
         """
         This is a getter for name
-        :return: name: str
+        :return: self.__name: str
         """
         return self.__name.capitalize()
 
@@ -61,7 +61,7 @@ class Animal(ABC):
     def get_age(self):
         """
         This is a getter for age
-        :return: age: int
+        :return: self.__age: int
         """
         return self.__age
 
@@ -71,7 +71,7 @@ class Animal(ABC):
     def get_dietary_needs(self):
         """
         This is a getter for dietary needs
-        :return: dietary_needs: str
+        :return: self.__dietary_needs: str
         """
         return self.__dietary_needs.capitalize()
 
@@ -81,7 +81,7 @@ class Animal(ABC):
     def get_species(self):
         """
         This is a getter for species
-        :return: species
+        :return: self.__species: str
         """
         return self.__species
 
@@ -91,7 +91,7 @@ class Animal(ABC):
     def get_health(self):
         """
         This is a getter for health
-        :return: health
+        :return: self.__health: str
         """
         return self.__health
 
@@ -109,7 +109,7 @@ class Animal(ABC):
         """
         This function uses the random feature to create a number between 1 and 4.
         It then assigns that number to a health status for the animal.
-        :return: health
+        :return: self.__health: str
         """
         # set status to a random integer between 1 and 4
         status = random.randint(1, 4)
@@ -160,7 +160,7 @@ class Animal(ABC):
     def __str__(self):
         """
         This is the string method for Animal
-        :return:
+        :return: str
         """
         return f"Meet {self.animal_name}! {self.animal_name} is a {self.species}, and is {self.age} years old. {self.animal_name} is a {self.diet}.\nTo learn more about {self.animal_name}, ask one of our friendly Zookeepers!\n"
 
