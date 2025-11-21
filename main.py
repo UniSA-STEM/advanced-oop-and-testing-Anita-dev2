@@ -127,6 +127,9 @@ def staff_tending():
     # Keeper to clean enclosure
     enclosure.clean_enclosure(keeper)
 
+    # Generate enclosure health statuses
+    enclosure.generate_health()
+
     # Display health report
     enclosure.health_report()
 
@@ -188,11 +191,9 @@ def expanding_enclosure():
     farmyard.expand_enclosure()
 
 
-
-
-
-animal_methods()
-adding_different_animals()
-staff_methods()
-staff_tending()
-expanding_enclosure()
+if __name__ == "__main__":
+    animal_methods()
+    adding_different_animals()
+    staff_methods()
+    staff_tending()
+    expanding_enclosure()
