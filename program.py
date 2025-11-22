@@ -199,6 +199,8 @@ class TestZoo:
         aquatic.check_health(vet)
         assert aquatic.health_check == True
 
+    # Tests for staff classes
+
     def test_get_staff_name(self, zookeeper, vet):
         assert zookeeper.staff_name == "Bill"
         assert vet.staff_name == "Ben"
@@ -217,5 +219,14 @@ class TestZoo:
         assert vet.working == False
         zookeeper.clock_in()
         assert zookeeper.working == True
+
+    def test_clock_in(self, zookeeper, vet):
+        assert zookeeper.working == False
+        zookeeper.clock_in()
+        assert zookeeper.working == True
+        assert vet.working == False
+        vet.clock_in()
+        assert vet.working == True
+
 
 
